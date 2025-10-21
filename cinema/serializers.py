@@ -32,7 +32,7 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = "__all__"
-    
+
     def create(self, validated_data):
         actors = validated_data.pop("actors", None)
         genres = validated_data.pop("genres", None)
