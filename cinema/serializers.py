@@ -32,6 +32,17 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = "__all__"
+    
+    def create(self, validated_data):
+        actors = validated_data.pop("actors", None)
+        genres = validated_data.pop("genres", None)
+        movie = Movie.objects.create(**validated_data)
+        if actors is not None:
+            movie.actors.set(actors)
+        if genres is not None:
+            movie.genres.set(genres)
+        movie.save()
+        return movie
 
     def update(self, instance, validated_data):
         actors = validated_data.pop("actors", None)
